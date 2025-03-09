@@ -4,11 +4,35 @@
 
 class VAO
 {
-public:
+
+private:
+
 	GLuint VAOid;
 	GLuint VBOid;
-	std::vector <float> vertices;
+	GLuint EBOid;
 
+	std::vector <float> vertices;
+	std::vector <unsigned int> indicies;
+	bool hasEBO = false;
+
+	void buildEBO();
+	void buildVBO();
+	void buildAttributes();
+
+
+public:
+	
+	
+
+	VAO(std::vector <float>& vertices, std::vector <unsigned int>& indicies);
 	VAO(std::vector <float>& vertices);
 	void bind();
+	void unbind();
+
+	int getVerticesSize();
+	bool isUsingEBO();
+	int getIndiciesSize();
+
+
+
 };

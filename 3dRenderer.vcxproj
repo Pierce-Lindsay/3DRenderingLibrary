@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="dependencies\include\Gladstuff\glad\glad.c" />
     <ClCompile Include="library\logger.cpp" />
+    <ClCompile Include="library\math\shape.cpp" />
     <ClCompile Include="library\math\transformer.cpp" />
     <ClCompile Include="library\model.cpp" />
     <ClCompile Include="library\renderer.cpp" />
@@ -35,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\logger.h" />
+    <ClInclude Include="library\math\shape.h" />
     <ClInclude Include="library\math\transformer.h" />
     <ClInclude Include="library\model.h" />
     <ClInclude Include="library\renderer.h" />

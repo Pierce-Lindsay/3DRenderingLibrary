@@ -29,10 +29,6 @@ void Renderer::init()
 	//default scene, make sure things init before calling it
 	activeScene = new Scene;
 	activeScene->init(window.getAspectRatio());
-
-	//init shaders
-	//Shader shad("basicShader.shader");
-	//ren::setActiveProgram(Shader::shaderToProgram["basicShader.shader"]);
 }
 
 

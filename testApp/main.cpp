@@ -1,4 +1,5 @@
 #include "../library/renderer.h"
+#include "../library/math/shape.h"
 
 
 int main()
@@ -18,10 +19,11 @@ int main()
 		0.5, -0.5, 0.0, 1.0,
 		-0.5, -0.5, 0.0, 1.0 };
 
-	Model* m = new Model(vertices);
-	Model* m2 = new Model(vertices2);
+	Model* m = new Model(ShapeType::SQUARE);
 	renderer->addModelToActiveScene(m);
-	renderer->addModelToActiveScene(m2);
+
+	//Model* m2 = new Model(ShapeType::TRIANGLE);
+	//renderer->addModelToActiveScene(m2);
 
 	//render loop
 	while (renderer->active())
@@ -32,8 +34,6 @@ int main()
 	delete(m);
 	m = NULL;
 
-	delete(m2);
-	m2 = NULL;
 	renderer->terminate();
 	return 0;
 
