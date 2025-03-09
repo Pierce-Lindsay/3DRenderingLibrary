@@ -10,6 +10,33 @@ struct shader_sources {
 };
 
 
+void checkFailedCompile(GLuint shader, std::string shaderName)
+{
+	GLint isCompiled = 0;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+	if (isCompiled == GL_FALSE)
+	{
+		GLint maxLength = 0;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// The maxLength includes the NULL character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+
+		std::cout << "Error in " << shaderName << " Shader!" << '\n';
+
+		// Provide the infolog in whatever manor you deem best.
+		for (int i = 0; i < errorLog.size(); i++)
+		{
+			std::cout << errorLog[i];
+		}
+		// Exit with failure.
+		glDeleteShader(shader); // Don't leak the shader.
+		return;
+	}
+}
+
+
 //every shader that is created is stored in this map and will return the program
  std::unordered_map <std::string, GLuint> shaderToProgram;
 
@@ -116,6 +143,10 @@ shader_sources get_sources(std::string filepath)
 
 void shad::initShaderIfNotFound(std::string filepath)
 {
+	if (!(shaderToProgram.find(filepath) == shaderToProgram.end())) {
+		// found so dont add new shader
+		return;
+	}
 	std::string name = filepath;
 
 	filepath.insert(0, "/library/rendering/shaders/");
@@ -132,28 +163,35 @@ void shad::initShaderIfNotFound(std::string filepath)
 	glShaderSource(vertex_shader, 1, vertex_shader_source, NULL);
 	glCompileShader(vertex_shader);
 
+	checkFailedCompile(vertex_shader, "Vertex");
+
 	TCS_shader = glCreateShader(GL_TESS_CONTROL_SHADER);
 	glShaderSource(TCS_shader, 1, TCS_shader_source, NULL);
 	glCompileShader(TCS_shader);
+
+	checkFailedCompile(TCS_shader, "TCS");
 
 	TES_shader = glCreateShader(GL_TESS_EVALUATION_SHADER);
 	glShaderSource(TES_shader, 1, TES_shader_source, NULL);
 	glCompileShader(TES_shader);
 
+	checkFailedCompile(TES_shader, "TES");
+
 	geo_shader = glCreateShader(GL_GEOMETRY_SHADER);
 	glShaderSource(geo_shader, 1, geo_shader_source, NULL);
 	glCompileShader(geo_shader);
+
+	checkFailedCompile(geo_shader, "GEO");
 
 	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment_shader, 1, fragment_shader_source, NULL);
 	glCompileShader(fragment_shader);
 
-	program = glCreateProgram();
-	std::cout << program << '\n';
+	checkFailedCompile(fragment_shader, "Fragment");
 
+	program = glCreateProgram();
 
 	glAttachShader(program, vertex_shader);
-
 
 	if (s_s.tcs_source.empty() == false)
 		glAttachShader(program, TCS_shader);
@@ -172,10 +210,7 @@ void shad::initShaderIfNotFound(std::string filepath)
 
 
 	glAttachShader(program, fragment_shader);
-	std::cout << program << '\n';
 	glLinkProgram(program);
-	std::cout << program << '\n';
-	std::cout << fragment_shader_source << '\n';
 	//program contains shaders so they can be deleted now
 	glDeleteShader(vertex_shader);
 	glDeleteShader(TCS_shader);
@@ -193,5 +228,6 @@ GLuint shad::getProgram(std::string shaderName)
 {
 	return shaderToProgram[shaderName];
 }
+
 
 
