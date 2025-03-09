@@ -2,13 +2,20 @@
 
 
 //ensures that glfw and glad are defined
-void Scene::init()
+void Scene::init(double aspectRatio)
 {
 	updateClearColor();
+	cameraMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	updateProjection(aspectRatio);
+	ren::setActiveCamera(cameraMatrix);
+	
 }
 
-void Scene::update()
+void Scene::update(double aspectRatio)
 {
+	if (aspectRatio != lastAspectRatio)
+		updateProjection(aspectRatio);	
+		
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -35,4 +42,11 @@ void Scene::draw()
 void Scene::addModel(Model* model)
 {
 	models.push_back(model);
+}
+
+void Scene::updateProjection(double aspectRatio)
+{
+	lastAspectRatio = aspectRatio;
+	projectionMatrix = glm::perspective(90.0, lastAspectRatio, 0.2, 10.0);
+	ren::setActiveProjection(projectionMatrix);
 }

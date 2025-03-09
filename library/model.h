@@ -14,8 +14,8 @@ private:
 
 public:
 
-	//just pass in vertices with this constructor, default transformer
-	Model(std::vector <float> vertices);
+	//just pass in vertices with this constructor, default transformer, use default material if null
+	Model(std::vector <float> vertices, Material* material = NULL);
 	~Model();
 
 	void draw();

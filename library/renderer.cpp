@@ -28,18 +28,17 @@ void Renderer::init()
 	window.init();
 	//default scene, make sure things init before calling it
 	activeScene = new Scene;
-	activeScene->init();
+	activeScene->init(window.getAspectRatio());
 
 	//init shaders
-	Shader shad("basicShader.shader");
-	activeProgram = shad.getProgram();
-
+	//Shader shad("basicShader.shader");
+	//ren::setActiveProgram(Shader::shaderToProgram["basicShader.shader"]);
 }
 
 
 void Renderer::update()
 {
-	activeScene->update();
+	activeScene->update(window.getAspectRatio());
 
 	activeScene->draw();
 

@@ -1,8 +1,28 @@
 #include "shader.h"
 
 
+struct shader_sources {
+	std::string vertex_source;
+	std::string tcs_source;
+	std::string tes_source;
+	std::string geo_source;
+	std::string fragment_source;
+};
 
-shader_sources Shader::get_sources(std::string filepath)
+
+//every shader that is created is stored in this map and will return the program
+ std::unordered_map <std::string, GLuint> shaderToProgram;
+
+
+ GLuint program;
+ GLuint vertex_shader;
+ GLuint TCS_shader;
+ GLuint TES_shader;
+ GLuint geo_shader;
+ GLuint fragment_shader;
+ shader_sources s_s;
+
+shader_sources get_sources(std::string filepath)
 {
 	shader_sources s_s;
 
@@ -94,8 +114,9 @@ shader_sources Shader::get_sources(std::string filepath)
 	return s_s;
 }
 
-Shader::Shader(std::string filepath)
+void shad::initShaderIfNotFound(std::string filepath)
 {
+	std::string name = filepath;
 
 	filepath.insert(0, "/library/rendering/shaders/");
 	filepath.insert(0, std::filesystem::current_path().string());
@@ -161,13 +182,16 @@ Shader::Shader(std::string filepath)
 	glDeleteShader(TES_shader);
 	glDeleteShader(geo_shader);
 	glDeleteShader(fragment_shader);
+
+	//add filepath with corresponsing program to map
+	shaderToProgram[name] = program;
 }
 
 
-GLuint Shader::getProgram()
+
+GLuint shad::getProgram(std::string shaderName)
 {
-	return program;
+	return shaderToProgram[shaderName];
 }
-
 
 

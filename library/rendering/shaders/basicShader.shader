@@ -3,10 +3,12 @@
 layout(location = 0) in vec4 aPos;
 
 uniform mat4 modelMatrix;
+uniform mat4 projMatrix;
+uniform mat4 cameraMatrix;
 
 void main()
 {
-	gl_Position = modelMatrix * aPos;
+	gl_Position = projMatrix * cameraMatrix * modelMatrix * aPos;
 }
 
 

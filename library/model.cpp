@@ -2,9 +2,13 @@
 
 unsigned int idCounter = 0;
 
-Model::Model(std::vector <float> vertices)
+Model::Model(std::vector <float> vertices, Material* material) 
 {
-	renderable = new Renderable(vertices);
+	if (material == NULL)
+		material = new Material(shad::defaultShader);
+
+	
+	renderable = new Renderable(vertices, material);
 	transformer = new Transformer();
 	id = idCounter;
 	idCounter++;

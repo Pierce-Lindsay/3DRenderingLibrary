@@ -8,7 +8,7 @@ void Window::init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(1920, 1080, "3dRender", NULL, NULL);
+	window = glfwCreateWindow(width, height, "3dRender", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << '\n';
@@ -30,6 +30,9 @@ void Window::init()
 
 void Window::update()
 {
+	//update window height and width
+	glfwGetWindowSize(window, &width, &height);
+	glViewport(0, 0, width, height);
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
@@ -46,4 +49,12 @@ void Window::terminate()
 GLFWwindow* Window::getWindow()
 {
 	return window;
+}
+
+float Window::getAspectRatio()
+{
+	//avoid divide by zero when window closed
+	if (height == 0)
+		return 0;
+	return float(width) / float(height);
 }

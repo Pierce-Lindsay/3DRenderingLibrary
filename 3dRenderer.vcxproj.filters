@@ -51,6 +51,9 @@
     <ClCompile Include="library\math\transformer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="library\rendering\material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\logger.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\math\transformer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\rendering\material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

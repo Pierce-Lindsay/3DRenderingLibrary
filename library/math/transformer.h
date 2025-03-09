@@ -9,7 +9,7 @@ private:
 	float rotation = { 0 };
 	glm::vec3 rotationAxis = { 0, 0, 1 };
 	glm::vec3 dialation = { 1.0, 1.0, 1.0 };
-	glm::mat4 modelMat;
+	glm::mat4 modelMat = glm::mat4(1.0f);
 
 public:
 
