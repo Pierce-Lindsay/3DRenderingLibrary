@@ -1,8 +1,20 @@
-#include "../library/logger.h"
+#include "../library/window.h"
+
+
 
 int main()
 {
-	printL("hello, world!");
+	//initializes everything 
+	Window window;
 
+
+	//render loop
+	while (window.isOpen())
+	{
+		window.update();
+	}
+
+	window.terminate();
 	return 0;
+
 }
