@@ -1,6 +1,8 @@
 #pragma once
 #include "rendererEssentials.h"
 #include "view/window.h"
+#include "rendering/shader.h"
+#include "rendering/renderable.h"
 #include <mutex>
 
 //singleton, there should definitly obly ever be 1 renderer
@@ -12,12 +14,17 @@ private:
     Renderer() {}
     ~Renderer() {}
 
+    //private because is only called once by GetInstance the first time
+   //inititilize 
+    void init();
+
 	static Renderer* instance;
 	//used for multi-thread safety
 	static std::mutex mutex;
 
 	Window window;
-	Scene activeScene;
+	Scene* activeScene;
+
 public:
    
     // N0 cloning
@@ -32,9 +39,18 @@ public:
 
     static Renderer* GetInstance();
 
-	void init();
+   
+
+    
+	//update renderer, lifeblood of our render loop
 	void update();
+    //checks if the renderer is still active
 	bool active();
+    //terminates renderer
 	void terminate();
-	
+
+    void setActiveScene(Scene* scene);
+
+    void addModelToActiveScene(Model* model);
+  
 };

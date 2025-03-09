@@ -21,17 +21,31 @@
   <ItemGroup>
     <ClCompile Include="dependencies\include\Gladstuff\glad\glad.c" />
     <ClCompile Include="library\logger.cpp" />
+    <ClCompile Include="library\math\transformer.cpp" />
+    <ClCompile Include="library\model.cpp" />
     <ClCompile Include="library\renderer.cpp" />
+    <ClCompile Include="library\rendererEssentials.cpp" />
+    <ClCompile Include="library\rendering\glData.cpp" />
+    <ClCompile Include="library\rendering\renderable.cpp" />
+    <ClCompile Include="library\rendering\shader.cpp" />
     <ClCompile Include="library\view\scene.cpp" />
     <ClCompile Include="library\view\window.cpp" />
     <ClCompile Include="testApp\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\logger.h" />
+    <ClInclude Include="library\math\transformer.h" />
+    <ClInclude Include="library\model.h" />
     <ClInclude Include="library\renderer.h" />
     <ClInclude Include="library\rendererEssentials.h" />
+    <ClInclude Include="library\rendering\glData.h" />
+    <ClInclude Include="library\rendering\renderable.h" />
+    <ClInclude Include="library\rendering\shader.h" />
     <ClInclude Include="library\view\scene.h" />
     <ClInclude Include="library\view\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="library\rendering\shaders\basicShader.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

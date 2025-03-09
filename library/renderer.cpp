@@ -27,14 +27,23 @@ void Renderer::init()
 {
 	window.init();
 	//default scene, make sure things init before calling it
-	activeScene.init();
+	activeScene = new Scene;
+	activeScene->init();
+
+	//init shaders
+	Shader shad("basicShader.shader");
+	activeProgram = shad.getProgram();
+
 }
 
 
 void Renderer::update()
 {
+	activeScene->update();
+
+	activeScene->draw();
+
 	window.update();
-	activeScene.update();
 }
 //check if renderer is active
 bool Renderer::active()
@@ -46,3 +55,16 @@ void Renderer::terminate()
 {
 	window.terminate();
 }
+
+void Renderer::setActiveScene(Scene* scene)
+{
+	//this could be memory unsafe, what happens to the memory where activeScene is?
+	delete(activeScene);
+	activeScene = scene;
+}
+
+void Renderer::addModelToActiveScene(Model* model)
+{
+	activeScene->addModel(model);
+}
+

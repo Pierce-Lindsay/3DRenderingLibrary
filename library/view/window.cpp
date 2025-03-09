@@ -24,6 +24,8 @@ void Window::init()
 		throw;
 	}
 
+	glViewport(0, 0, 1920, 1080);
+
 }
 
 void Window::update()

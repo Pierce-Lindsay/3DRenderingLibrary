@@ -33,6 +33,24 @@
     <ClCompile Include="library\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="library\rendering\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\rendering\glData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\rendering\renderable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\rendererEssentials.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\math\transformer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\logger.h">
@@ -50,5 +68,23 @@
     <ClInclude Include="library\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="library\rendering\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\rendering\glData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\rendering\renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\math\transformer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="library\rendering\shaders\basicShader.shader" />
   </ItemGroup>
 </Project>
