@@ -1,7 +1,6 @@
 #include "window.h"
 
-
-Window::Window()
+void Window::init()
 {
 	//graphics and window initialization
 	glfwInit();
@@ -25,17 +24,10 @@ Window::Window()
 		throw;
 	}
 
-	//default scene, make sure things init before calling it
-	activeScene.initScene();
-	
 }
-
 
 void Window::update()
 {
-	//clear window and such
-	activeScene.update();
-
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }

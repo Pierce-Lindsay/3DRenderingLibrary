@@ -1,20 +1,20 @@
-#include "../library/window.h"
+#include "../library/renderer.h"
 
 
 
 int main()
 {
-	//initializes everything 
-	Window window;
+	//initializes everything first time instance is grabed from anywhere
+	Renderer* renderer = Renderer::GetInstance();
 
 
 	//render loop
-	while (window.isOpen())
+	while (renderer->active())
 	{
-		window.update();
+		renderer->update();
 	}
 
-	window.terminate();
+	renderer->terminate();
 	return 0;
 
 }

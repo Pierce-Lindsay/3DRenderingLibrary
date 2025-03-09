@@ -21,15 +21,17 @@
   <ItemGroup>
     <ClCompile Include="dependencies\include\Gladstuff\glad\glad.c" />
     <ClCompile Include="library\logger.cpp" />
-    <ClCompile Include="library\scene.cpp" />
-    <ClCompile Include="library\window.cpp" />
+    <ClCompile Include="library\renderer.cpp" />
+    <ClCompile Include="library\view\scene.cpp" />
+    <ClCompile Include="library\view\window.cpp" />
     <ClCompile Include="testApp\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\logger.h" />
+    <ClInclude Include="library\renderer.h" />
     <ClInclude Include="library\rendererEssentials.h" />
-    <ClInclude Include="library\scene.h" />
-    <ClInclude Include="library\window.h" />
+    <ClInclude Include="library\view\scene.h" />
+    <ClInclude Include="library\view\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

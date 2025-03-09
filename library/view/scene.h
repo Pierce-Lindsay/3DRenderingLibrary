@@ -1,5 +1,5 @@
 #pragma once 
-#include "rendererEssentials.h"
+#include "../rendererEssentials.h"
 
 //window needs to be initialized first!!!
 class Scene
@@ -12,7 +12,7 @@ private:
 
 public:
 
-	void initScene();
+	void init();
 	void update();
 	void setClearColor(glm::vec4 color);
 };

@@ -2,7 +2,7 @@
 
 
 //ensures that glfw and glad are defined
-void Scene::initScene()
+void Scene::init()
 {
 	updateClearColor();
 }
