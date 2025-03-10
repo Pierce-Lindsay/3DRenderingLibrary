@@ -48,6 +48,6 @@ void Scene::addModel(Model* model)
 void Scene::updateProjection(double aspectRatio)
 {
 	lastAspectRatio = aspectRatio;
-	projectionMatrix = glm::perspective(glm::radians(60.0), lastAspectRatio, 0.1, 10.0);
+	projectionMatrix = glm::perspective(glm::radians(90.0), lastAspectRatio, 0.1, 10.0);
 	ren::setActiveProjection(projectionMatrix);
 }

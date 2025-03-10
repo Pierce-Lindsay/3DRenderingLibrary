@@ -83,3 +83,13 @@ int VAO::getIndiciesSize()
 {
 	return indicies.size();
 }
+
+const std::vector <float>& VAO::getVertices()
+{
+	return vertices;
+}
+
+const std::vector <unsigned int>& VAO::getIndicies()
+{
+	return indicies;
+}

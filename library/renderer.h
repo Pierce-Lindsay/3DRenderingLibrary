@@ -2,7 +2,7 @@
 #include "rendererEssentials.h"
 #include "view/window.h"
 #include "rendering/shader.h"
-#include "rendering/renderable.h"
+#include "rendering/batch.h"
 #include <mutex>
 
 //singleton, there should definitly obly ever be 1 renderer

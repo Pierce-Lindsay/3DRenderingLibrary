@@ -39,7 +39,7 @@
     <ClCompile Include="library\rendering\glData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\rendering\renderable.cpp">
+    <ClCompile Include="library\rendering\batch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="library\rendererEssentials.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="library\rendering\glData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library\rendering\renderable.h">
+    <ClInclude Include="library\rendering\batch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\model.h">

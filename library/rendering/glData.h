@@ -33,6 +33,10 @@ public:
 	bool isUsingEBO();
 	int getIndiciesSize();
 
+	const std::vector <float>& getVertices();
+
+	const std::vector <unsigned int>& getIndicies();
+
 
 
 };

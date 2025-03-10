@@ -16,4 +16,7 @@ public:
 	Material(std::string shaderName);
 
 	GLuint getProgram();
+
+	//lazy more java style
+	bool equals(Material* m);
 };

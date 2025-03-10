@@ -11,3 +11,10 @@ GLuint Material::getProgram()
 {
 	return program;
 }
+
+bool Material::equals(Material* m)
+{
+	if (m->program == program && m->shaderName == shaderName)
+		return true;
+	return false;
+}

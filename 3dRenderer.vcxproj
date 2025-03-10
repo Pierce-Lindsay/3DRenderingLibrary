@@ -28,7 +28,7 @@
     <ClCompile Include="library\rendererEssentials.cpp" />
     <ClCompile Include="library\rendering\glData.cpp" />
     <ClCompile Include="library\rendering\material.cpp" />
-    <ClCompile Include="library\rendering\renderable.cpp" />
+    <ClCompile Include="library\rendering\batch.cpp" />
     <ClCompile Include="library\rendering\shader.cpp" />
     <ClCompile Include="library\view\scene.cpp" />
     <ClCompile Include="library\view\window.cpp" />
@@ -43,7 +43,7 @@
     <ClInclude Include="library\rendererEssentials.h" />
     <ClInclude Include="library\rendering\glData.h" />
     <ClInclude Include="library\rendering\material.h" />
-    <ClInclude Include="library\rendering\renderable.h" />
+    <ClInclude Include="library\rendering\batch.h" />
     <ClInclude Include="library\rendering\shader.h" />
     <ClInclude Include="library\view\scene.h" />
     <ClInclude Include="library\view\window.h" />

@@ -12,15 +12,17 @@ int main()
 
 	//Note!!!, if delete something made here, there will be dangling pointers in renderer!!!!, 
 	// call delete in renderer on model id# first!!!!
-	Transformer* t = new Transformer(glm::vec3(3, 1, -3), glm::vec3(2, 2, 2), 45, glm::vec3(0, 0, 1));
-	Model* m = new Model(ShapeType::SQUARE, t);
+	Transformer* t = new Transformer(glm::vec3(0, 0, -1), glm::vec3(1, 1, 1), 0, glm::vec3(0, 0, 1));
+	Model* m = new Model(ShapeType::CUBE, t);
 
-	Transformer* t2 = new Transformer(glm::vec3(0.5, -0.5, -1), glm::vec3(2, 2, 2), 0, glm::vec3(1, 0, 0));
-	Model* m2 = new Model(ShapeType::TRIANGULAR_PYRAMID, t2);
-	
+	Transformer* t2 = new Transformer(glm::vec3(2.0, -0.5, -1), glm::vec3(0.5, 0.5, 0.5), 0, glm::vec3(0, 1, 0));
+	Model* m2 = new Model(ShapeType::CUBE, t2);
+
+	m->mergeHereWithSameMaterial(m2);
+	delete(m2);
+	m2 = NULL;
 
 	renderer->addModelToActiveScene(m);
-	renderer->addModelToActiveScene(m2);
 
 	
 	auto start = std::chrono::steady_clock::now();
@@ -28,9 +30,9 @@ int main()
 	//render loop
 	while (renderer->active())
 	{
-		t2->rotate(0.2, glm::vec3(1, 0,0));
-		t->move(glm::vec3(-0.005, 0, 0));
-		t->rotate(0.1, glm::vec3(0, 0, 1));
+		//t2->rotate(0.2, glm::vec3(0, 1,0));
+		//t->move(glm::vec3(-0.005, 0, 0));
+		t->rotate(0.1, glm::vec3(0, 0.5, 1));
 		renderer->update();
 
 		
