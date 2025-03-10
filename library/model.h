@@ -9,17 +9,19 @@ class Model
 private:
 	Model* parent = NULL;
 	Batch* batch = NULL;
-	Transformer* transformer = NULL;
 	//shouldn't really be used much, mainly here for convenience, renderable already has material defined in it
 	Material* material = NULL;
 
 	unsigned int id;
 
 public:
+	//public for convenience
+	Transformer* transformer = NULL;
 
 	//just pass in vertices with this constructor, default transformer, use default material if null
 	Model(std::vector <float>& vertices, Transformer* transformer = NULL, Material* material = NULL);
 	Model(ShapeType sType, Transformer* transformer = NULL, Material* material = NULL);
+	Model(std::vector <float>& vertices, std::vector <unsigned int>& indicies, Transformer* transformer, Material* material);
 
 	//needs material because material is part of renderable not model
 	void checkInitDefaults();
@@ -35,5 +37,11 @@ public:
 
 	//uses hierarchy from parents to recursivley determine the correct model matrix
 	glm::mat4 determineHierarchyModelMat();
+
+	//returns pointer todeep copy of this Model
+	Model* deepCopy();
+
+	Batch* getBatch();
+
 
 };

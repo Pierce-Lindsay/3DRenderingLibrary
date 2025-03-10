@@ -11,6 +11,15 @@ Model::Model(std::vector <float>& vertices, Transformer* transformer, Material* 
 	batch = new Batch(vertices, this->material);
 }
 
+Model::Model(std::vector <float>& vertices, std::vector <unsigned int>& indicies, Transformer* transformer, Material* material)
+	:transformer{ transformer }, material{ material }
+{
+	checkInitDefaults();
+
+	//above func makes sure material and transformer are defined
+	batch = new Batch(vertices, indicies, this->material);
+}
+
 Model::Model(ShapeType sType, Transformer* transformer, Material* material)
 	:transformer{ transformer }, material{ material }
 {
@@ -44,6 +53,9 @@ Model::~Model()
 	transformer = NULL;
 	delete(batch);
 	batch = NULL;
+
+	material = NULL;
+	//note deleting batch should delete material
 }
 
 
@@ -72,6 +84,38 @@ glm::mat4 Model::determineHierarchyModelMat()
 	//the other model has the same material, it batchtes it in this models batch
 void Model::mergeHereWithSameMaterial(Model* other)
 {
+	//note, this is using the absolute modelmat, not the hierarchical one, this
+	//is because we want to sever ties with any previous object
 	glm::mat4 mat = other->transformer->getModelMat();
 	batch->addToBatch(other->batch, mat);
+}
+
+
+//returns deep copy of this Model
+Model* Model::deepCopy()
+{
+	//easierst way is to just do deep copies of the thinsg we needs for Models constructor
+	VAO oldVAO = batch->getVAO();
+	auto oldVerts = oldVAO.getVertices();
+	auto oldInds = oldVAO.getIndicies();
+
+	std::vector <float> newVerts;
+	std::vector <unsigned int> newInds;
+
+	for (int i = 0; i < oldVerts.size(); i++)
+		newVerts.push_back(oldVerts[i]);
+
+	for (int i = 0; i < oldInds.size(); i++)
+		newInds.push_back(oldInds[i]);
+
+	Transformer* trans = new Transformer(transformer->deepCopy());
+	Material* newMat = new Material(material->deepCopy());
+	Model* newM = new Model(newVerts, newInds, trans, newMat);
+	return newM;
+}
+
+
+Batch* Model::getBatch()
+{
+	return batch;
 }

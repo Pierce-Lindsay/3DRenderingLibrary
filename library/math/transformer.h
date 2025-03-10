@@ -59,4 +59,8 @@ public:
 
 	glm::mat4 getModelMat();
 
+	//deep copies this
+	Transformer deepCopy();
+
+
 };

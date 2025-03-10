@@ -5,8 +5,10 @@
 
 class Batch
 {
+private:
 	VAO vao;
 	Material* material;
+	bool isInstanced = false;
 public:
 	//if we were to change these vertices later, they could change our shapes which are supposed to be constant
 	//for that reason, we are not taking in a reference
@@ -26,5 +28,8 @@ public:
 	void draw(glm::mat4& modelMat);
 
 	const VAO& getVAO();
-	  Material* getMaterial();
+
+	Material* getMaterial();
+
+	void setupForInstancing(std::vector <glm::mat4>& instModels);
 };

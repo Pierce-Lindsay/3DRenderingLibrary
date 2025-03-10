@@ -19,4 +19,6 @@ public:
 
 	//lazy more java style
 	bool equals(Material* m);
+
+	Material deepCopy();
 };

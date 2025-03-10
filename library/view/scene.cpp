@@ -5,7 +5,7 @@
 void Scene::init(double aspectRatio)
 {
 	updateClearColor();
-	cameraMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	cameraMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	updateProjection(aspectRatio);
 	ren::setActiveCamera(cameraMatrix);
 	
@@ -37,6 +37,11 @@ void Scene::draw()
 	{
 		models[i]->draw();
 	}
+
+	for (int i = 0; i < instances.size(); i++)
+	{
+		instances[i]->drawInstances();
+	}
 }
 
 
@@ -45,9 +50,14 @@ void Scene::addModel(Model* model)
 	models.push_back(model);
 }
 
+void Scene::addInstance(Instance* instance)
+{
+	instances.push_back(instance);
+}
+
 void Scene::updateProjection(double aspectRatio)
 {
 	lastAspectRatio = aspectRatio;
-	projectionMatrix = glm::perspective(glm::radians(90.0), lastAspectRatio, 0.1, 10.0);
+	projectionMatrix = glm::perspective(glm::radians(120.0), lastAspectRatio, 0.1, 50.0);
 	ren::setActiveProjection(projectionMatrix);
 }

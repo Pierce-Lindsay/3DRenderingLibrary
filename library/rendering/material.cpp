@@ -18,3 +18,9 @@ bool Material::equals(Material* m)
 		return true;
 	return false;
 }
+
+Material Material::deepCopy()
+{
+	Material newMat(*this);
+	return newMat;
+}

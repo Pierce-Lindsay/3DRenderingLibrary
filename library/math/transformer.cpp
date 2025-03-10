@@ -163,3 +163,14 @@ const float Transformer::getInitialRotation()
 {
 	return savedRotAmt;
 }
+
+
+Transformer Transformer::deepCopy()
+{
+	Transformer newT(pos, dialation, savedRotAmt, savedRotAxis);
+	newT.setRotate(rotation, rotationAxis);
+	newT.modelMat = modelMat;
+	//just in case
+	newT.changedTransform = true;
+	return newT;
+}

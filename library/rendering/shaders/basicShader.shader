@@ -1,14 +1,19 @@
 //shader vertex
 #version 430 core
 layout(location = 0) in vec4 aPos;
+layout (location = 1) in mat4 instanceModel;
 
 uniform mat4 modelMatrix;
 uniform mat4 projMatrix;
 uniform mat4 cameraMatrix;
+uniform bool isInstanced;
 
 void main()
 {
-	gl_Position = projMatrix * cameraMatrix * modelMatrix * aPos;
+	if(!isInstanced)
+		gl_Position = projMatrix * cameraMatrix * modelMatrix * aPos;
+	else
+		gl_Position = projMatrix * cameraMatrix * modelMatrix * instanceModel * aPos;
 }
 
 

@@ -58,6 +58,8 @@ void VAO::buildAttributes()
 	//ATTRIBS
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void VAO::bind()
@@ -71,7 +73,7 @@ void VAO::unbind()
 }
 
 
-int VAO::getVerticesSize()
+size_t VAO::getVerticesSize()
 {
 	return vertices.size();
 }
@@ -79,9 +81,14 @@ bool VAO::isUsingEBO()
 {
 	return hasEBO;
 }
-int VAO::getIndiciesSize()
+size_t VAO::getIndiciesSize()
 {
 	return indicies.size();
+}
+
+size_t VAO::getInstancesAmount()
+{
+	return instanceModels.size();
 }
 
 const std::vector <float>& VAO::getVertices()
@@ -92,4 +99,45 @@ const std::vector <float>& VAO::getVertices()
 const std::vector <unsigned int>& VAO::getIndicies()
 {
 	return indicies;
+}
+
+void VAO::setupForInstancing(std::vector <glm::mat4>& instModels)
+{
+	instanceModels = instModels;
+	std::cout << "instModels count" << instanceModels.size() << '\n';
+	isInstanced = true;
+	//sloppy to start for clarity, will clean up later
+
+	bind();
+	//bind our vao and add an intantance VBO to it
+	//VBO
+	
+	glGenBuffers(1, &instanceVBOid);
+	glBindBuffer(GL_ARRAY_BUFFER, instanceVBOid);
+	//first of all 
+	//vectors are cotignuous
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instanceModels.size(), instanceModels.data(), GL_STATIC_DRAW);
+
+
+	//add attribs to this buffer
+	//we need for attributes cause max is vec4, and mat4 as 4 vec4s
+	std::size_t sz = sizeof(glm::vec4);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)0);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(1 * sz));
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(2 * sz));
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(3 * sz));
+
+	//says how to split the guys up
+	glVertexAttribDivisor(1, 1);
+	glVertexAttribDivisor(2, 1);
+	glVertexAttribDivisor(3, 1);
+	glVertexAttribDivisor(4, 1);
+
+	unbind();
+
+
 }

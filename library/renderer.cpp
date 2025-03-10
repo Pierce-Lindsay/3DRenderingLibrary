@@ -63,3 +63,11 @@ void Renderer::addModelToActiveScene(Model* model)
 	activeScene->addModel(model);
 }
 
+//returns pointer to instance created
+Instance* Renderer::addModelAsInstanceToActiveScene(Model* model, std::vector <Transformer*>& instanceTransformers)
+{
+	Instance* inst = new Instance(model, instanceTransformers);
+	activeScene->addInstance(inst);
+	return inst;
+}
+

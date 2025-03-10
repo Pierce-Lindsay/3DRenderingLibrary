@@ -3,6 +3,7 @@
 #include "view/window.h"
 #include "rendering/shader.h"
 #include "rendering/batch.h"
+#include "rendering/instance.h"
 #include <mutex>
 
 //singleton, there should definitly obly ever be 1 renderer
@@ -52,5 +53,8 @@ public:
     void setActiveScene(Scene* scene);
 
     void addModelToActiveScene(Model* model);
+
+    //adds an amount of instanced variations of provided model into the scene ewual to size of instanceTransforms
+    Instance* addModelAsInstanceToActiveScene(Model* model, std::vector <Transformer*>& instanceTransformers);
   
 };

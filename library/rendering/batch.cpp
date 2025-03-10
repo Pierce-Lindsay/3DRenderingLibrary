@@ -6,6 +6,12 @@ void bindUniformMat4(glm::mat4 matrix, std::string name)
 		name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void bindUniformBool(bool b, std::string name)
+{
+	glUniform1i(glGetUniformLocation(ren::getActiveProgram(),
+		name.c_str()), b);
+}
+
 
 Batch::Batch(std::vector <float> vertices, std::vector <unsigned int> indicies, Material* material) :
 	vao(vertices, indicies), material{material}
@@ -31,12 +37,31 @@ void Batch::draw(glm::mat4& modelMat)
 	bindUniformMat4(modelMat, "modelMatrix");
 	bindUniformMat4(ren::getActiveCamera(), "cameraMatrix");
 	bindUniformMat4(ren::getActiveProjection(), "projMatrix");
+	bindUniformBool(isInstanced, "isInstanced");
+
+
+
 	vao.bind();
 	//draw type depends on whether the objects has an ebo
-	if(vao.isUsingEBO())
-		glDrawElements(GL_TRIANGLES, GLsizei(vao.getIndiciesSize()), GL_UNSIGNED_INT, 0);
+
+	//also depends on whether we are instanced or not
+
+	if (isInstanced)
+	{
+		if (vao.isUsingEBO())
+			glDrawElementsInstanced(GL_TRIANGLES, GLsizei(vao.getIndiciesSize()), GL_UNSIGNED_INT, 0, vao.getInstancesAmount());
+		else
+			glDrawArraysInstanced(GL_TRIANGLES, 0, GLsizei(vao.getVerticesSize()), vao.getInstancesAmount());
+	}
 	else
-		glDrawArrays(GL_TRIANGLES, 0, GLsizei(vao.getVerticesSize()));
+	{
+		if (vao.isUsingEBO())
+			glDrawElements(GL_TRIANGLES, GLsizei(vao.getIndiciesSize()), GL_UNSIGNED_INT, 0);
+		else
+			glDrawArrays(GL_TRIANGLES, 0, GLsizei(vao.getVerticesSize()));
+	}
+
+
 
 	vao.unbind();
 }
@@ -97,8 +122,8 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 	}
 
 	//update our indicies
-	std::cout << "otherInds" << otherInds.size() << '\n';
-	std::cout << "ourInds" << ourInds.size() << '\n';
+	//std::cout << "otherInds" << otherInds.size() << '\n';
+	//std::cout << "ourInds" << ourInds.size() << '\n';
 
 	
 	for (int i = 0; i < otherInds.size(); i++)
@@ -106,6 +131,8 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 		ourInds.push_back(otherInds[i] + indOffset );
 	}
 
+
+	/*
 	//finally we can create a new VAO with the new indicies and vertices
 	for (int i = 0; i < ourVerts.size(); i += 4)
 	{
@@ -117,7 +144,7 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 		std::cout << ourInds[i] << ", " << ourInds[i + 1] << ", " << ourInds[i + 2] << '\n';
 	}
 
-
+	*/
 	//finally, move all our points, by the offset from before
 	//t be efficient, this is gonna look disgusting
 
@@ -144,7 +171,7 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 
 	
 	
-
+	/*
 	//finally we can create a new VAO with the new indicies and vertices
 	for (int i = 0; i < ourVerts.size(); i+=4)
 	{
@@ -157,10 +184,21 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 	}
 
 
-	std::cout << "ourVerts:" << ourVerts.size() << '\n';
-	std::cout << "ourInds:" << ourInds.size() << '\n';
+	//std::cout << "ourVerts:" << ourVerts.size() << '\n';
+	//std::cout << "ourInds:" << ourInds.size() << '\n';
+
+	*/
 	vao = VAO(ourVerts, ourInds);
 			
+}
+
+
+void Batch::setupForInstancing(std::vector <glm::mat4>& instModels)
+{
+	isInstanced = true;
+
+	//now we have to rebuild vao for instancing as it needs new attrib arrays
+	vao.setupForInstancing(instModels);
 }
 
 
