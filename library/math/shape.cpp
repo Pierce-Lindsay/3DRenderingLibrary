@@ -23,29 +23,55 @@ Shape::Shape(ShapeType type)
 	{
 		std::cout << "creating new shape" << '\n';
 
-		if (type == ShapeType::TRIANGLE)
-		{
-			vertices = {
-			0.0, 0.5, 0.0, 1.0,
-			0.5, -0.5, 0.0, 1.0,
-			-0.5, -0.5, 0.0, 1.0 };
+		switch (type) {
+			case ShapeType::TRIANGLE:
+			{
+				vertices = {
+				0.0, 1.0, 0.0, 1.0,
+				0.866, -0.5, 0.0, 1.0,
+				-0.866, -0.5, 0.0, 1.0 };
 
-			indicies = {
-				0, 1, 2
-			};
-		}
-		else if (type == ShapeType::SQUARE)
-		{
-			vertices = {
-			0.5, 0.5, 0.0, 1.0,
-			0.5, -0.5, 0.0, 1.0,
-			-0.5, -0.5, 0.0, 1.0,
-			-0.5, 0.5, 0.0, 1.0 };
+				indicies = {
+					0, 1, 2
+				};
+				break;
+			}
+			case ShapeType::SQUARE:
+			{
+				vertices = {
+				0.5, 0.5, 0.0, 1.0,
+				0.5, -0.5, 0.0, 1.0,
+				-0.5, -0.5, 0.0, 1.0,
+				-0.5, 0.5, 0.0, 1.0 };
 
-			indicies = {
-				0, 1, 2,
-				0, 2, 3
-			};
+				indicies = {
+					0, 1, 2,
+					0, 2, 3
+				};
+				break;
+			}
+			case ShapeType::TRIANGULAR_PYRAMID:
+			{
+
+
+
+				vertices = {
+				0.0,0.5774, -0.2041, 1.0,
+				-0.5, -0.2887,-0.2041, 1.0,
+				0.5, -0.2887, -0.2041, 1.0,
+				0.0, 0.0, 0.6125, 1.0 };
+
+				
+
+				indicies = {
+					2,0, 1,
+					3,0, 2,
+					1, 0, 3,
+					1, 3, 2
+				};
+
+				break;
+			}
 		}
 
 		typeToShape[type] = *this;

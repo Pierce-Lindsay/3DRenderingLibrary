@@ -16,7 +16,7 @@ void Scene::update(double aspectRatio)
 	if (aspectRatio != lastAspectRatio)
 		updateProjection(aspectRatio);	
 		
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Scene::setClearColor(glm::vec4 color)
@@ -28,6 +28,7 @@ void Scene::setClearColor(glm::vec4 color)
 void Scene::updateClearColor()
 {
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void Scene::draw()
@@ -47,6 +48,6 @@ void Scene::addModel(Model* model)
 void Scene::updateProjection(double aspectRatio)
 {
 	lastAspectRatio = aspectRatio;
-	projectionMatrix = glm::perspective(90.0, lastAspectRatio, 0.2, 10.0);
+	projectionMatrix = glm::perspective(glm::radians(60.0), lastAspectRatio, 0.1, 10.0);
 	ren::setActiveProjection(projectionMatrix);
 }

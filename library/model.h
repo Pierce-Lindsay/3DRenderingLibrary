@@ -10,14 +10,20 @@ private:
 	Model* parent = NULL;
 	Renderable* renderable = NULL;
 	Transformer* transformer = NULL;
+	//shouldn't really be used much, mainly here for convenience, renderable already has material defined in it
+	Material* material = NULL;
 
 	unsigned int id;
 
 public:
 
 	//just pass in vertices with this constructor, default transformer, use default material if null
-	Model(std::vector <float>& vertices, Material* material = NULL);
-	Model(ShapeType sType, Material* material = NULL);
+	Model(std::vector <float>& vertices, Transformer* transformer = NULL, Material* material = NULL);
+	Model(ShapeType sType, Transformer* transformer = NULL, Material* material = NULL);
+
+	//needs material because material is part of renderable not model
+	void checkInitDefaults();
+
 	~Model();
 
 	void draw();
