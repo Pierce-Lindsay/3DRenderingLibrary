@@ -15,7 +15,8 @@ enum class ShapeType
 class Shape
 {
 private:
-	//add normals and tex coords eventually!!!!
+	//add normals!!!!
+	//tex coords are interleaved in vertices
 	std::vector <float> vertices;
 	std::vector <unsigned int> indicies;
 

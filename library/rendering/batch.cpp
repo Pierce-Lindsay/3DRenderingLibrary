@@ -6,10 +6,16 @@ void bindUniformMat4(glm::mat4 matrix, std::string name)
 		name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void bindUniformBool(bool b, std::string name)
+void bindUniform1i(int b, std::string name)
 {
 	glUniform1i(glGetUniformLocation(ren::getActiveProgram(),
 		name.c_str()), b);
+}
+
+void bindUniformVec4(glm::vec4 v, std::string name)
+{
+	glUniform4fv(glGetUniformLocation(ren::getActiveProgram(),
+		name.c_str()), 1, glm::value_ptr(v));
 }
 
 
@@ -37,15 +43,26 @@ void Batch::draw(glm::mat4& modelMat)
 	bindUniformMat4(modelMat, "modelMatrix");
 	bindUniformMat4(ren::getActiveCamera(), "cameraMatrix");
 	bindUniformMat4(ren::getActiveProjection(), "projMatrix");
-	bindUniformBool(isInstanced, "isInstanced");
+	bindUniform1i(isInstanced, "isInstanced");
+	bindUniformVec4(material->getColor(), "uColor");
+
+	
 
 
 
 	vao.bind();
 	//draw type depends on whether the objects has an ebo
+	if (material->isTextured())
+	{
+		bindUniform1i(0, "tex0");
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, material->getTexture()->getTextureID());
+
+	}
 
 	//also depends on whether we are instanced or not
 
+	
 	if (isInstanced)
 	{
 		if (vao.isUsingEBO())
@@ -60,10 +77,12 @@ void Batch::draw(glm::mat4& modelMat)
 		else
 			glDrawArrays(GL_TRIANGLES, 0, GLsizei(vao.getVerticesSize()));
 	}
+	
 
-
-
+	if(material->isTextured())
+		glBindTexture(GL_TEXTURE_2D, 0);
 	vao.unbind();
+
 }
 
 
@@ -106,10 +125,10 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 
 	//dont edit the vertices!!!, just multiply them with matrices
 	std::vector <glm::vec4> newPoints;
-	int indOffset = ourVerts.size()/4;
+	int indOffset = ourVerts.size()/6;
 
-	//4 nums per vertex, they should always be divisible by 4
-	for (int i = 0; i<otherVerts.size(); i += 4)
+	//4 nums per vertex, + 2 per texcoord they should always be divisible by 6
+	for (int i = 0; i<otherVerts.size(); i += 6)
 	{
 		//for each set of verts, grab them from the vertices list, and them multiply them by the offsetMatrix
 		glm::vec4 newPoint = offsetModelMat * glm::vec4(otherVerts[i], otherVerts[i + 1], otherVerts[i + 2], otherVerts[i + 3]);
@@ -119,6 +138,8 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 		ourVerts.push_back(newPoint.y);
 		ourVerts.push_back(newPoint.z);
 		ourVerts.push_back(newPoint.w);
+		ourVerts.push_back(otherVerts[i + 4]);
+		ourVerts.push_back(otherVerts[i + 5]);
 	}
 
 	//update our indicies
@@ -155,7 +176,7 @@ void Batch::addToBatch(Batch* otherBatch, glm::mat4& offsetModelMat)
 
 	for (int i = 0; i < ourVerts.size(); i++)
 	{
-		if (currentSubtractor >= 4)
+		if (currentSubtractor >= 6)
 			currentSubtractor = 0;
 
 

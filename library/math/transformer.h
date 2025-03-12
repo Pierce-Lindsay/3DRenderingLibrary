@@ -1,6 +1,7 @@
 #pragma once
 #include "../rendererEssentials.h"
 #include "../dependencies/include/glm/gtx/norm.hpp"
+#include <iostream>
 
 //handles transfromations of a model
 class Transformer
@@ -62,5 +63,6 @@ public:
 	//deep copies this
 	Transformer deepCopy();
 
-
+	static glm::mat4 quickMakeModel(glm::vec3 pos, glm::vec3 scale, float rotation, glm::vec3 rotationAxis);
 };
+

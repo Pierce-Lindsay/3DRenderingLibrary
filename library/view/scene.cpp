@@ -29,6 +29,9 @@ void Scene::updateClearColor()
 {
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
 	glEnable(GL_DEPTH_TEST);
+
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 }
 
 void Scene::draw()

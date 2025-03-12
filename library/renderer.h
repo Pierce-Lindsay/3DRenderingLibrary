@@ -4,6 +4,7 @@
 #include "rendering/shader.h"
 #include "rendering/batch.h"
 #include "rendering/instance.h"
+#include "rendering/texture.h"
 #include <mutex>
 
 //singleton, there should definitly obly ever be 1 renderer
@@ -18,6 +19,8 @@ private:
     //private because is only called once by GetInstance the first time
    //inititilize 
     void init();
+    //inititializes alls haders in shaders folder in assets
+    void initShaders();
 
 	static Renderer* instance;
 	//used for multi-thread safety
@@ -56,5 +59,10 @@ public:
 
     //adds an amount of instanced variations of provided model into the scene ewual to size of instanceTransforms
     Instance* addModelAsInstanceToActiveScene(Model* model, std::vector <Transformer*>& instanceTransformers);
+
+    //adds an amount of instanced variations of provided model into the scene ewual to size of instanceTransforms
+    Instance* addModelAsInstanceToActiveScene(Model* model, std::vector <glm::mat4>& instanceTransformers);
+
+
   
 };

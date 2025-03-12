@@ -56,8 +56,11 @@ void VAO::buildVBO()
 void VAO::buildAttributes()
 {
 	//ATTRIBS
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(4 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -122,20 +125,20 @@ void VAO::setupForInstancing(std::vector <glm::mat4>& instModels)
 	//add attribs to this buffer
 	//we need for attributes cause max is vec4, and mat4 as 4 vec4s
 	std::size_t sz = sizeof(glm::vec4);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)0);
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(1 * sz));
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)0);
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(2 * sz));
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(1 * sz));
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(3 * sz));
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(2 * sz));
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * sz, (void*)(3 * sz));
 
 	//says how to split the guys up
-	glVertexAttribDivisor(1, 1);
 	glVertexAttribDivisor(2, 1);
 	glVertexAttribDivisor(3, 1);
 	glVertexAttribDivisor(4, 1);
+	glVertexAttribDivisor(5, 1);
 
 	unbind();
 

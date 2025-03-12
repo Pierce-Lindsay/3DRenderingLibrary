@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dependencies\include\Gladstuff\glad\glad.c" />
-    <ClCompile Include="library\logger.cpp" />
+    <ClCompile Include="library\dependencies\include\Gladstuff\glad\glad.c" />
+    <ClCompile Include="library\dependencies\include\STB\stb_image.cpp" />
     <ClCompile Include="library\math\shape.cpp" />
     <ClCompile Include="library\math\transformer.cpp" />
     <ClCompile Include="library\model.cpp" />
@@ -31,12 +31,12 @@
     <ClCompile Include="library\rendering\material.cpp" />
     <ClCompile Include="library\rendering\batch.cpp" />
     <ClCompile Include="library\rendering\shader.cpp" />
+    <ClCompile Include="library\rendering\texture.cpp" />
     <ClCompile Include="library\view\scene.cpp" />
     <ClCompile Include="library\view\window.cpp" />
     <ClCompile Include="testApp\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="library\logger.h" />
     <ClInclude Include="library\math\shape.h" />
     <ClInclude Include="library\math\transformer.h" />
     <ClInclude Include="library\model.h" />
@@ -47,11 +47,13 @@
     <ClInclude Include="library\rendering\material.h" />
     <ClInclude Include="library\rendering\batch.h" />
     <ClInclude Include="library\rendering\shader.h" />
+    <ClInclude Include="library\rendering\texture.h" />
     <ClInclude Include="library\view\scene.h" />
     <ClInclude Include="library\view\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="library\rendering\shaders\basicShader.shader" />
+    <None Include="assets\shaders\basicShader.shader" />
+    <None Include="assets\shaders\basicShaderTextured.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -145,7 +147,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)dependencies\include\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)library\dependencies\include\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,7 +166,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)dependencies\include\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)library\dependencies\include\GLFW\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

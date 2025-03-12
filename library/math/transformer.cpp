@@ -15,11 +15,21 @@ Transformer::Transformer(glm::vec3 pos, glm::vec3 scale, float rotation, glm::ve
 void Transformer::initModelMat()
 {
 	//reverse order as required to work with glm
+
+	//only multiply required matrixes, matrix multiplication is slow!!!!
 	modelMat = glm::mat4(1.0f);
-	modelMat = glm::translate(modelMat, pos);
-	modelMat = glm::rotate(modelMat, glm::radians(rotation), rotationAxis);
-	modelMat = glm::rotate(modelMat, glm::radians(savedRotAmt), savedRotAxis);
-	modelMat = glm::scale(modelMat, dialation);
+
+	if(glm::length2(pos) != 0.0)
+		modelMat = glm::translate(modelMat, pos);
+
+	if(rotation != 0.0)
+		modelMat = glm::rotate(modelMat, glm::radians(rotation), rotationAxis);
+
+	if(savedRotAmt != 0.0)
+		modelMat = glm::rotate(modelMat, glm::radians(savedRotAmt), savedRotAxis);
+
+	if(!(dialation.x == 1.0 && dialation.y == 1.0 && dialation.z == 1.0))
+		modelMat = glm::scale(modelMat, dialation);
 	//reset chnage check
 	changedTransform = false;
 		
@@ -173,4 +183,25 @@ Transformer Transformer::deepCopy()
 	//just in case
 	newT.changedTransform = true;
 	return newT;
+}
+
+
+//quick fast way to generate a matrix if you don't want the frills of an actuall transformer object
+glm::mat4 Transformer::quickMakeModel(glm::vec3 pos, glm::vec3 scale, float rotation, glm::vec3 rotationAxis)
+{
+	glm::mat4 modelMat = glm::mat4(1.0f);
+
+	
+	if (glm::length2(pos) != 0.0)
+		modelMat = glm::translate(modelMat, pos);
+
+	if (rotation != 0.0)
+		modelMat = glm::rotate(modelMat, glm::radians(rotation), rotationAxis);
+
+	if (!(scale.x == 1.0 && scale.y == 1.0 && scale.z == 1.0))
+		modelMat = glm::scale(modelMat,scale);
+
+	//std::cout << "Mat vec3: " << modelMat[3].x << ", " << modelMat[3].y << ", " << modelMat[3].z << '\n';
+
+	return modelMat;
 }

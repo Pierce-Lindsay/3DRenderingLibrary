@@ -29,6 +29,9 @@ void Renderer::init()
 	//default scene, make sure things init before calling it
 	activeScene = new Scene;
 	activeScene->init(window.getAspectRatio());
+
+	initShaders();
+	Texture::initTextures();
 }
 
 
@@ -69,5 +72,18 @@ Instance* Renderer::addModelAsInstanceToActiveScene(Model* model, std::vector <T
 	Instance* inst = new Instance(model, instanceTransformers);
 	activeScene->addInstance(inst);
 	return inst;
+}
+
+Instance* Renderer::addModelAsInstanceToActiveScene(Model* model, std::vector <glm::mat4>& instanceTransformers)
+{
+	std::cout << instanceTransformers.size() << '\n';
+	Instance* inst = new Instance(model, instanceTransformers);
+	activeScene->addInstance(inst);
+	return inst;
+}
+
+void Renderer::initShaders()
+{
+	shad::initShaders();
 }
 

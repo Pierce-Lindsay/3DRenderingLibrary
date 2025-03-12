@@ -57,7 +57,7 @@ shader_sources get_sources(std::string filepath)
 	std::ifstream file;
 	file.open(filepath);
 	if (file.is_open())
-		std::cout << "shaders file opened" << '\n';
+		std::cout << filepath << " file opened" << '\n';
 	//create modes for pushing data
 	//a mode will be true until proven otherwise
 	enum class shader_push_mode {
@@ -141,24 +141,24 @@ shader_sources get_sources(std::string filepath)
 	return s_s;
 }
 
-void shad::initShaderIfNotFound(std::string filepath)
+bool checkIfShaderExistsInMap(std::string name)
 {
-	if (!(shaderToProgram.find(filepath) == shaderToProgram.end())) {
+	if (!(shaderToProgram.find(name) == shaderToProgram.end())) {
 		// found so dont add new shader
-		return;
+		return true;
 	}
-	std::string name = filepath;
+	return false;
+}
 
-	filepath.insert(0, "/library/rendering/shaders/");
-	filepath.insert(0, std::filesystem::current_path().string());
-	
-	std::cout << "attempting to open: " << filepath << '\n';
-	s_s = get_sources(filepath);
-	 const GLchar* vertex_shader_source[]{ s_s.vertex_source.c_str()};
-	 const GLchar* TCS_shader_source[]{ s_s.tcs_source.c_str()};
-	 const GLchar* TES_shader_source[]{ s_s.tes_source.c_str() };
-	 const GLchar* geo_shader_source[]{ s_s.geo_source.c_str() };
-	 const GLchar* fragment_shader_source[]{ s_s.fragment_source.c_str() };
+void initShader(std::string fullPath, std::string name)
+{
+	std::cout << "attempting to open: " << fullPath << '\n';
+	s_s = get_sources(fullPath);
+	const GLchar* vertex_shader_source[]{ s_s.vertex_source.c_str() };
+	const GLchar* TCS_shader_source[]{ s_s.tcs_source.c_str() };
+	const GLchar* TES_shader_source[]{ s_s.tes_source.c_str() };
+	const GLchar* geo_shader_source[]{ s_s.geo_source.c_str() };
+	const GLchar* fragment_shader_source[]{ s_s.fragment_source.c_str() };
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex_shader, 1, vertex_shader_source, NULL);
 	glCompileShader(vertex_shader);
@@ -220,6 +220,43 @@ void shad::initShaderIfNotFound(std::string filepath)
 
 	//add filepath with corresponsing program to map
 	shaderToProgram[name] = program;
+}
+
+void shad::initShaderAndCheckIfExists(std::string filename)
+{
+	if (checkIfShaderExistsInMap(filename))
+		return;
+
+	std::string name = filename;
+
+	filename.insert(0, "/assets/shaders/");
+	filename.insert(0, std::filesystem::current_path().string());
+
+	initShader(filename, name);
+
+}
+
+
+void shad::initShaderAndCheckIfExists(std::string filepath, std::string filename)
+{
+	if (checkIfShaderExistsInMap(filename))
+		return;
+
+	std::string name = filepath;
+
+	initShader(filepath, filename);
+}
+	
+
+
+void shad::initShaders()
+{
+	std::string path = "/assets/shaders/";
+	path.insert(0, std::filesystem::current_path().string());
+
+	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+		initShaderAndCheckIfExists(entry.path().string(), entry.path().filename().string());
+	}
 }
 
 

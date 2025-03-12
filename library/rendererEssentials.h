@@ -1,11 +1,10 @@
 #pragma once
-#define STB_IMAGE_IMPLEMENTATION
-#include "../dependencies/include/Gladstuff/glad/glad.h"
-#include "../dependencies/include/GLFW/glfw3.h"
-//#include "../dependencies/include/stb_image.h"
-#include "../dependencies/include/glm/glm.hpp"
-#include "../dependencies/include/glm/gtc/matrix_transform.hpp"
-#include "../dependencies/include/glm/gtc/type_ptr.hpp"
+#include "dependencies/include/Gladstuff/glad/glad.h"
+#include "dependencies/include/GLFW/glfw3.h"
+#include "dependencies/include/STB/stb_image.h"
+#include "dependencies/include/glm/glm.hpp"
+#include "dependencies/include/glm/gtc/matrix_transform.hpp"
+#include "dependencies/include/glm/gtc/type_ptr.hpp"
 
 //kinda like a singleton but not a class, forced to only be 1 instance of vars cause only in cpp file
 namespace ren

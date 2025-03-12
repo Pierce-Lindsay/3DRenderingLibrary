@@ -12,37 +12,35 @@ int main()
 
 	//Note!!!, if delete something made here, there will be dangling pointers in renderer!!!!, 
 	// call delete in renderer on model id# first!!!!
-	std::vector <Transformer*> ts;
-
+	std::vector <glm::mat4> ts;
+	Material* mat = new Material("basicShaderTextured.shader", "stones_texture.jpg", ren::RED);
 	Transformer* t = new Transformer(glm::vec3(0, 0, -1), glm::vec3(1, 1, 1), 0, glm::vec3(0, 0, 1));
-	Model* m = new Model(ShapeType::CUBE, t);
+	Model* m = new Model(ShapeType::CUBE, t, mat);
 
+	
+	
 	for (int i = 0; i < 100; i++)
 	{
 		for (int j = 0; j < 100; j++)
 		{
 			for (int k = 0; k < 100; k++)
 			{
-				ts.push_back(new Transformer(glm::vec3(-50 + i , -50 + j , -k), glm::vec3(0.1, 0.1, 0.1), 0, glm::vec3(0, 1, 0)));
+				ts.push_back(Transformer::quickMakeModel(glm::vec3(-50 + i , -50 + j , -50 + k), glm::vec3(0.1, 0.1, 0.1), 0, glm::vec3(0, 1, 0)));
 			}
 		}
 
 			
 	}
-
+	
+	
 	Instance* inst1 = renderer->addModelAsInstanceToActiveScene(m, ts);
 	delete(m);
 	m = NULL;
+	mat = NULL;
 	t = NULL;
-
-	//Model* m2 = new Model(ShapeType::CUBE, t2);
-
-	//m->mergeHereWithSameMaterial(m2);
-	//delete(m2);
-	//m2 = NULL;
+	
 
 	//renderer->addModelToActiveScene(m);
-
 	
 	auto start = std::chrono::steady_clock::now();
 	double lastTime = 0;
@@ -50,11 +48,11 @@ int main()
 	//render loop
 	while (renderer->active())
 	{
-		//t2->rotate(0.2, glm::vec3(0, 1,0));
-		//t->move(glm::vec3(-0.005, 0, 0));
 		inst1->model->transformer->rotate(0.1, glm::vec3(0, 0.5, 1));
+		inst1->model->getBatch()->getMaterial()->setColor(glm::vec4(glm::cos(long double(totalFrames / 1000.0f))+0.1, glm::sin(-long double(totalFrames / 1000.0f)) +0.1, 0.1, 1.0f));
 		renderer->update();
-
+		//t->rotate(0.1, glm::vec3(0.4, 1, 0));
+		
 		
 
 		//just for convenience to check efficiency
@@ -66,8 +64,12 @@ int main()
 		
 
 		//std::cout << "elapsedTime: " << elapsedTime << '\n';
-		if(elapsedTime >= 30)
-			std::cout << "Framerate: " <<1.0/diffTime<< '\n';
+		//if(elapsedTime >= 10)
+		//	std::cout << "Framerate: " <<1.0/diffTime<< '\n';
+
+		//std::cout << "elapsedTime: " << elapsedTime << '\n';
+		if (elapsedTime >= 10)
+			std::cout << "Avg Framerate: " << totalFrames/elapsedTime << '\n';
 
 		totalFrames++;
 	}

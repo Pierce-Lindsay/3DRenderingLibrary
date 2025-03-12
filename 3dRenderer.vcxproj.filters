@@ -18,10 +18,7 @@
     <ClCompile Include="testApp\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\include\Gladstuff\glad\glad.c">
+    <ClCompile Include="library\dependencies\include\Gladstuff\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="library\view\window.cpp">
@@ -60,11 +57,14 @@
     <ClCompile Include="library\rendering\instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="library\rendering\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="library\dependencies\include\STB\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="library\logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="library\view\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -101,8 +101,12 @@
     <ClInclude Include="library\rendering\instance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="library\rendering\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="library\rendering\shaders\basicShader.shader" />
+    <None Include="assets\shaders\basicShader.shader" />
+    <None Include="assets\shaders\basicShaderTextured.shader" />
   </ItemGroup>
 </Project>
