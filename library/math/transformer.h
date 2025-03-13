@@ -63,6 +63,8 @@ public:
 	//deep copies this
 	Transformer deepCopy();
 
+	bool getChangePending();
+
 	static glm::mat4 quickMakeModel(glm::vec3 pos, glm::vec3 scale, float rotation, glm::vec3 rotationAxis);
 };
 

@@ -14,10 +14,10 @@ int main()
 	// call delete in renderer on model id# first!!!!
 	std::vector <glm::mat4> ts;
 	Material* mat = new Material("basicShaderTextured.shader", "stones_texture.jpg", ren::RED);
-	Transformer* t = new Transformer(glm::vec3(0, 0, -1), glm::vec3(1, 1, 1), 0, glm::vec3(0, 0, 1));
+	Transformer* t = new Transformer(glm::vec3(0, 0, -1), glm::vec3(5, 5, 5), 0, glm::vec3(0, 0, 1));
 	Model* m = new Model(ShapeType::CUBE, t, mat);
 
-	
+	/*
 	
 	for (int i = 0; i < 100; i++)
 	{
@@ -31,16 +31,16 @@ int main()
 
 			
 	}
+	*/
 	
-	
-	Instance* inst1 = renderer->addModelAsInstanceToActiveScene(m, ts);
-	delete(m);
-	m = NULL;
-	mat = NULL;
-	t = NULL;
+	//Instance* inst1 = renderer->addModelAsInstanceToActiveScene(m, ts);
+	//delete(m);
+	//m = NULL;
+	//mat = NULL;
+	//t = NULL;
 	
 
-	//renderer->addModelToActiveScene(m);
+	renderer->addModelToActiveScene(m);
 	
 	auto start = std::chrono::steady_clock::now();
 	double lastTime = 0;
@@ -48,8 +48,9 @@ int main()
 	//render loop
 	while (renderer->active())
 	{
-		inst1->model->transformer->rotate(0.1, glm::vec3(0, 0.5, 1));
-		inst1->model->getBatch()->getMaterial()->setColor(glm::vec4(glm::cos(long double(totalFrames / 1000.0f))+0.1, glm::sin(-long double(totalFrames / 1000.0f)) +0.1, 0.1, 1.0f));
+		//inst1->model->transformer->rotate(0.1, glm::vec3(0, 0.5, 1));
+		//inst1->model->getBatch()->getMaterial()->setColor(glm::vec4(glm::cos(long double(totalFrames / 1000.0f))+0.1, glm::sin(-long double(totalFrames / 1000.0f)) +0.1, 0.1, 1.0f));
+		//renderer->getActiveScene()->getCamera()->setAt(renderer->getActiveScene()->getCamera()->getAt() + glm::vec3(0.01, 0, 0));
 		renderer->update();
 		//t->rotate(0.1, glm::vec3(0.4, 1, 0));
 		
@@ -64,12 +65,12 @@ int main()
 		
 
 		//std::cout << "elapsedTime: " << elapsedTime << '\n';
-		//if(elapsedTime >= 10)
+		//if(elapsedTime >= 20)
 		//	std::cout << "Framerate: " <<1.0/diffTime<< '\n';
 
 		//std::cout << "elapsedTime: " << elapsedTime << '\n';
-		if (elapsedTime >= 10)
-			std::cout << "Avg Framerate: " << totalFrames/elapsedTime << '\n';
+		//if (elapsedTime >= 10)
+		//	std::cout << "Avg Framerate: " << totalFrames/elapsedTime << '\n';
 
 		totalFrames++;
 	}

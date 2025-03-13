@@ -63,6 +63,9 @@
     <ClCompile Include="library\dependencies\include\STB\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="library\view\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\view\window.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\rendering\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\view\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

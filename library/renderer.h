@@ -26,8 +26,8 @@ private:
 	//used for multi-thread safety
 	static std::mutex mutex;
 
-	Window window;
-	Scene* activeScene;
+    Window window;
+    Scene* activeScene = NULL;
 
 public:
    
@@ -63,6 +63,6 @@ public:
     //adds an amount of instanced variations of provided model into the scene ewual to size of instanceTransforms
     Instance* addModelAsInstanceToActiveScene(Model* model, std::vector <glm::mat4>& instanceTransformers);
 
-
+    Scene* getActiveScene();
   
 };

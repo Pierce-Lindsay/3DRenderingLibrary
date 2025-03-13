@@ -185,6 +185,11 @@ Transformer Transformer::deepCopy()
 	return newT;
 }
 
+bool Transformer::getChangePending()
+{
+	return changedTransform;
+}
+
 
 //quick fast way to generate a matrix if you don't want the frills of an actuall transformer object
 glm::mat4 Transformer::quickMakeModel(glm::vec3 pos, glm::vec3 scale, float rotation, glm::vec3 rotationAxis)
@@ -205,3 +210,5 @@ glm::mat4 Transformer::quickMakeModel(glm::vec3 pos, glm::vec3 scale, float rota
 
 	return modelMat;
 }
+
+

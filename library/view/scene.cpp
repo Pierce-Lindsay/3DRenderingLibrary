@@ -5,18 +5,20 @@
 void Scene::init(double aspectRatio)
 {
 	updateClearColor();
-	cameraMatrix = glm::lookAt(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-	updateProjection(aspectRatio);
-	ren::setActiveCamera(cameraMatrix);
-	
+	activeCamera = new Camera(DEFAULT_CAM_EYE, DEFAULT_CAM_LOOKAT, DEFAULT_CAM_UP);
+		//default camera values
+	ren::setActiveCamera(activeCamera->getMatrix());
+	perspectiveAspectRatio = aspectRatio;
+	resetProjection();
 }
 
-void Scene::update(double aspectRatio)
+Scene::~Scene()
 {
-	if (aspectRatio != lastAspectRatio)
-		updateProjection(aspectRatio);	
-		
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	delete(activeCamera);
+	activeCamera = NULL;
+
+	models.clear();
+	instances.clear();
 }
 
 void Scene::setClearColor(glm::vec4 color)
@@ -58,9 +60,77 @@ void Scene::addInstance(Instance* instance)
 	instances.push_back(instance);
 }
 
-void Scene::updateProjection(double aspectRatio)
+void Scene::setFOV(double d)
 {
-	lastAspectRatio = aspectRatio;
-	projectionMatrix = glm::perspective(glm::radians(120.0), lastAspectRatio, 0.1, 50.0);
+	if (d != perspectiveFOV)
+	{
+		perspectiveFOV = d;
+		projectionChanged = true;
+	}
+}
+
+void Scene::setFar(double d)
+{
+	if (d != perspectiveFar)
+	{
+		perspectiveFar = d;
+		projectionChanged = true;
+	}
+}
+
+void Scene::setNear(double d)
+{
+	if (d != perspectiveNear)
+	{
+		perspectiveNear = d;
+		projectionChanged = true;
+	}
+	
+}
+
+
+double Scene::getFOV()
+{
+	return perspectiveFOV;
+}
+
+double Scene::getFar()
+{
+	return perspectiveFar;
+}
+
+double Scene::getNear()
+{
+	return perspectiveNear;
+}
+
+void Scene::update(double currentWindowAspectRatio)
+{
+	if (currentWindowAspectRatio != perspectiveAspectRatio)
+	{
+		perspectiveAspectRatio = currentWindowAspectRatio;
+		projectionChanged = true;
+	}
+
+	if (projectionChanged)
+		resetProjection();
+
+	//to be safe for now, just reassigned amera
+	ren::setActiveCamera(activeCamera->getMatrix());
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
+void Scene::resetProjection()
+{
+	projectionMatrix = glm::perspective(glm::radians(perspectiveFOV), perspectiveAspectRatio, perspectiveNear, perspectiveFar);
 	ren::setActiveProjection(projectionMatrix);
+
+	projectionChanged = false;
+}
+
+Camera* Scene::getCamera()
+{
+	return activeCamera;
 }

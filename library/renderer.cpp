@@ -87,3 +87,7 @@ void Renderer::initShaders()
 	shad::initShaders();
 }
 
+Scene* Renderer::getActiveScene()
+{
+	return activeScene;
+}
